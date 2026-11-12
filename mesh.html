@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindAR Eye Tracking</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-face-aframe.prod.js"></script>
+    <style>
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+        }
+        #hud {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            display: flex;
+            gap: 10px;
+        }
+        select {
+            font-size: 18px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="hud">
+        <select id="glassesSelect">
+            <option value="none">なし</option>
+            <option value="megane1">メガネ１</option>
+            <option value="megane2">メガネ２</option>
+            <option value="megane3">メガネ３</option>
+        </select>
+
+        <select id="hatSelect">
+            <option value="none">なし</option>
+            <option value="hat1">帽子１</option>
+            <option value="hat2">帽子２</option>
+        </select>
+
+        <select id="petSelect">
+            <option value="none">なし</option>
+            <option value="pet1">ペット１</option>
+            <option value="pet2">ペット２</option>
+            <option value="pet3">ペット３</option>
+        </select>
+    </div>
+
+    <a-scene id="scene" mindar-face embedded>
+        <a-entity id="face" mindar-face-target="anchorIndex: 168">
+            <a-gltf-model id="accessory" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity id="hat" mindar-face-target="anchorIndex: 10">
+        <a-gltf-model id="accessory2" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-entity id="pet" mindar-face-target="anchorIndex: 401">
+            <a-gltf-model id="accessory3" visible="false"></a-gltf-model>
+        </a-entity>
+        <a-camera position="0 0 0"></a-camera>
+    </a-scene>
+
+    <script>
+        const accessory = document.getElementById("accessory");
+        const accessory2 = document.getElementById("accessory2");
+        const accessory3 = document.getElementById("accessory3");
+        const petSelect = document.getElementById("petSelect");
+        const hatSelect = document.getElementById("hatSelect");
+        const glassesSelect = document.getElementById("glassesSelect");
+
+        function updatepet(){
+            const selectedValue = petSelect.value;
+            if(selectedValue === "none"){
+                accessory3.setAttribute("visible",false);
+                accessory3.removeAttribute("src");
+            }else {
+                accessory3.setAttribute("visible",true);
+                if (selectedValue === "pet1") {
+                accessory3.setAttribute("src", "wa.glb");
+                accessory3.setAttribute("position", "1 -0.5 -1.2");
+                accessory3.setAttribute("rotation", "0 0 0");
+                accessory3.setAttribute("scale", "0.8 0.8 0.8");
+            }else if (selectedValue === "pet2") {
+                accessory3.setAttribute("src", "Ghost by Quaternius - Iip30bDHmu.glb");
+                accessory3.setAttribute("position", "1 -1.5 -1.5");
+                accessory3.setAttribute("rotation", "0 0 0");
+                accessory3.setAttribute("scale", "0.5 0.5 0.5");
+            }else if (selectedValue === "pet3") {
+                accessory3.setAttribute("src", "Demon by Quaternius - Mo2ky6vkf8.glb");
+                accessory3.setAttribute("position", "1 -1.5 -1.5");
+                accessory3.setAttribute("rotation", "0 0 0");
+                accessory3.setAttribute("scale", "0.5 0.5 0.5");
+            }
+        }
+            
+        }
+
+        function updatehat(){
+            const selectedValue2 = hatSelect.value;
+            if(selectedValue2 === "none"){
+                accessory2.setAttribute("visible",false);
+                accessory2.removeAttribute("src");
+            }else {
+                accessory2.setAttribute("visible",true);
+                if (selectedValue2 === "hat1") {
+                accessory2.setAttribute("src", "Sombrero by hat_my_guy - CxDnECpFJH.glb");
+                accessory2.setAttribute("position", "-0 -0.1 -1.2");
+                accessory2.setAttribute("rotation", "0 0 0");
+                accessory2.setAttribute("scale", "0.8 0.8 0.8");
+            }else if (selectedValue2 === "hat2") {
+                accessory2.setAttribute("src", "Cone by J-Toastie - WoXpAJT0oD.glb");
+                accessory2.setAttribute("position", "0 0.35 -1");
+                accessory2.setAttribute("rotation", "0 0 0");
+                accessory2.setAttribute("scale", "1 1 1");
+            }
+        }
+            
+        }
+
+        function updateGlasses() {
+            const selectedValue = glassesSelect.value;
+
+            if(selectedValue === "none"){
+                accessory.setAttribute("visible",false);
+                accessory.removeAttribute("src");
+            }else {
+                accessory.setAttribute("visible",true);
+                if (selectedValue === "megane1") {
+                accessory.setAttribute("src", "Ski Goggles by iPoly3D - 4YCjSY3U6H.glb");
+                accessory.setAttribute("position", "-0 -0.058 -0");
+                accessory.setAttribute("rotation", "0 0 0");
+                accessory.setAttribute("scale", "0.485 0.485 0.485");
+            } else if (selectedValue === "megane2") {
+                accessory.setAttribute("src", "Pixel Glasses by iPoly3D - VQuqLwtyTa.glb");
+                accessory.setAttribute("position", "0 -0.068 -0");
+                accessory.setAttribute("rotation", "0 0 0");
+                accessory.setAttribute("scale", "0.55 0.55 0.55");
+            }else if (selectedValue === "megane3") {
+                accessory.setAttribute("src", "Glasses by iPoly3D - DBEk0SMQCt.glb");
+                accessory.setAttribute("position", "-0 -0.058 -0");
+                accessory.setAttribute("rotation", "0 0 0");
+                accessory.setAttribute("scale", "0.485 0.485 0.485");
+            }
+        }
+        }
+
+        // ページ読み込み時に初期選択のモデルをセット
+        window.addEventListener('DOMContentLoaded', () => {
+            updateGlasses();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updatehat();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updatepet();
+        });
+        // プルダウンの選択が変更されたときにモデルを切り替える
+        glassesSelect.addEventListener("change", updateGlasses);
+        hatSelect.addEventListener("change", updatehat);
+        petSelect.addEventListener("change", updatepet);
+    </script>
+</body>
+</html>
